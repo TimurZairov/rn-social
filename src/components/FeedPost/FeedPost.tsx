@@ -1,5 +1,5 @@
-import React from "react";
-import {Text, View, Image} from "react-native";
+import React, {useState} from "react";
+import {Text, View, Image, Pressable} from "react-native";
 import colors from "../../theme/color";
 import Entypo from "react-native-vector-icons/Entypo"
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -15,6 +15,28 @@ interface IFeedPost {
 }
 
 const FeedPost = ({post}: IFeedPost) => {
+
+    const [isDescriptionIsExpanded, setIsDescriptionIsExpanded] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
+    let onImageTap = 0;
+
+    const expandCommentHandler = () => {
+        setIsDescriptionIsExpanded(prevState => !prevState)
+    };
+
+    const isLikedHandler = () => {
+        setIsLiked(prevState => !prevState)
+    };
+
+
+    const doubleTapHandler = () => {
+        const date = Date.now()
+        if(date - onImageTap < 300){
+            isLikedHandler()
+        }
+        onImageTap = date;
+    };
+
     return (
         <View style={styles.container}>
             {/*HEADER*/}
@@ -27,20 +49,26 @@ const FeedPost = ({post}: IFeedPost) => {
             </View>
 
             {/*CONTENT*/}
-            <Image source={{uri: post.image}}
-                   style={styles.image}/>
+            <Pressable onPress={doubleTapHandler}>
+                <Image source={{uri: post.image}}
+                       style={styles.image}
+                />
+            </Pressable>
+
 
             {/*FOOTER*/}
             <View style={styles.footerContainer}>
 
                 {/*ICONS*/}
                 <View style={styles.iconContainer}>
-                    <AntDesign
-                        name={'hearto'}
-                        size={24}
-                        style={styles.icon}
-                        color={colors.gray}
-                    />
+                    <Pressable onPress={isLikedHandler}>
+                        <AntDesign
+                            name={isLiked ? "heart" : 'hearto'}
+                            size={24}
+                            style={styles.icon}
+                            color={isLiked ? colors.orange : colors.gray}
+                        />
+                    </Pressable>
                     <Ionicons
                         name="chatbubble-outline"
                         size={24}
@@ -68,12 +96,13 @@ const FeedPost = ({post}: IFeedPost) => {
                 </Text>
 
                 {/*DESCRIPTION*/}
-                <Text style={styles.text}>
+                <Text style={styles.text} numberOfLines={isDescriptionIsExpanded ? 0 : 3}>
                     <Text style={styles.bold}>{post.user.username}{' '}</Text>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet, consectetur dignissimos
                     dolorem eaque eos exercitationem molestiae necessitatibus nemo nesciunt possimus provident,
                     quo ratione repellat sapiente soluta tenetur vitae voluptatem?
                 </Text>
+                <Text style={styles.allComments} onPress={expandCommentHandler}>{isDescriptionIsExpanded ? "less" : "more"} </Text>
 
                 {/*COMMENTS*/}
                 <Text style={styles.allComments}>View all {post.nofComments} comments</Text>

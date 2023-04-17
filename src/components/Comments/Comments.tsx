@@ -5,11 +5,11 @@ import colors from "../../theme/color";
 import styles from "./styles";
 import {IComment} from "../../types/models";
 
-interface IComments {
+interface ICommentProps {
     comment: IComment
 }
 
-const Comments = ({comment}: IComments) => {
+const Comments = ({comment}: ICommentProps) => {
 
     return(
         <View style={styles.comments}>
