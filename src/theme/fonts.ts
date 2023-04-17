@@ -1,3 +1,7 @@
+import {TextStyle, Dimensions} from "react-native";
+
+const {width, height} = Dimensions.get('window')
+
 const fontSize = {
     es: 10,
     s: 12,
@@ -8,8 +12,8 @@ const fontSize = {
     xxlg: 30
 }
 
-const fontWeight = {
-    full: "9000",
+const fontWeight: {[key: string] : TextStyle['fontWeight']} = {
+    full: "900",
     semi: "600",
     bold: "bold",
     normal: "normal",

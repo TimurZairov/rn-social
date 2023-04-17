@@ -1,9 +1,10 @@
 const colors = {
     orange: "#FF643F",
     black: "#151515",
-    grey: "#D6D6D6",
+    lightGrey: "#b1b1b1",
     darkGray: "#2B2B2B",
-    white: "#F9F9F9"
+    white: "#F9F9F9",
+    gray: "#666666",
 }
 
 export default colors;
