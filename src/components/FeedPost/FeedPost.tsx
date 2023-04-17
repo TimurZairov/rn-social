@@ -9,6 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from "./styles";
 import {IPost} from "../../types/models";
 import Comments from "../Comments";
+import DoubleTap from "../DoubleTap/DoubleTap";
 
 interface IFeedPost {
     post: IPost
@@ -18,7 +19,7 @@ const FeedPost = ({post}: IFeedPost) => {
 
     const [isDescriptionIsExpanded, setIsDescriptionIsExpanded] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
-    let onImageTap = 0;
+
 
     const expandCommentHandler = () => {
         setIsDescriptionIsExpanded(prevState => !prevState)
@@ -29,13 +30,6 @@ const FeedPost = ({post}: IFeedPost) => {
     };
 
 
-    const doubleTapHandler = () => {
-        const date = Date.now()
-        if(date - onImageTap < 300){
-            isLikedHandler()
-        }
-        onImageTap = date;
-    };
 
     return (
         <View style={styles.container}>
@@ -49,11 +43,11 @@ const FeedPost = ({post}: IFeedPost) => {
             </View>
 
             {/*CONTENT*/}
-            <Pressable onPress={doubleTapHandler}>
+            <DoubleTap onDoubleTap={isLikedHandler}>
                 <Image source={{uri: post.image}}
                        style={styles.image}
                 />
-            </Pressable>
+            </DoubleTap>
 
 
             {/*FOOTER*/}
