@@ -32,12 +32,14 @@ const FeedPost = ({post}: IFeedPost) => {
 
     let content = null;
 
-    if(post.image){
-        content =  <Image source={{uri: post.image}} style={styles.image} />
-    } else if (post.images) {
-        content = <Carousel postImages = {post.images} />
-    }
+    if (post.image) {
 
+        content = <DoubleTap onDoubleTap={isLikedHandler}>
+                        <Image source={{uri: post.image}} style={styles.image}/>
+                   </DoubleTap>
+    } else if (post.images) {
+        content = <Carousel postImages={post.images } onDoublePress={isLikedHandler}/>
+    }
 
 
     return (
@@ -52,11 +54,7 @@ const FeedPost = ({post}: IFeedPost) => {
             </View>
 
             {/*CONTENT*/}
-            <DoubleTap onDoubleTap={isLikedHandler}>
                 {content}
-            </DoubleTap>
-
-
             {/*FOOTER*/}
             <View style={styles.footerContainer}>
 
@@ -103,12 +101,13 @@ const FeedPost = ({post}: IFeedPost) => {
                     dolorem eaque eos exercitationem molestiae necessitatibus nemo nesciunt possimus provident,
                     quo ratione repellat sapiente soluta tenetur vitae voluptatem?
                 </Text>
-                <Text style={styles.allComments} onPress={expandCommentHandler}>{isDescriptionIsExpanded ? "less" : "more"} </Text>
+                <Text style={styles.allComments}
+                      onPress={expandCommentHandler}>{isDescriptionIsExpanded ? "less" : "more"} </Text>
 
                 {/*COMMENTS*/}
                 <Text style={styles.allComments}>View all {post.nofComments} comments</Text>
                 {post.comments.map(comment => (
-                <Comments key={comment.id} comment ={comment} />
+                    <Comments key={comment.id} comment={comment}/>
                 ))}
 
                 {/*DATE*/}

@@ -5,6 +5,9 @@ import colors from "../../theme/color";
 
 
 export default StyleSheet.create({
+    container: {
+        position: "relative"
+    },
     carouselContainer: {
         width: sizes.width,
         aspectRatio: 1
@@ -26,8 +29,8 @@ export default StyleSheet.create({
         marginBottom: 5
     },
     dots: {
-        width: 10,
-        height: 10,
+        width: 8,
+        height: 8,
         borderRadius: 5,
         backgroundColor: colors.lightGrey,
         marginHorizontal: 4,
