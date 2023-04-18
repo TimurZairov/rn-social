@@ -10,6 +10,7 @@ import styles from "./styles";
 import {IPost} from "../../types/models";
 import Comments from "../Comments";
 import DoubleTap from "../DoubleTap/DoubleTap";
+import Carousel from "../Carousel";
 
 interface IFeedPost {
     post: IPost
@@ -29,6 +30,14 @@ const FeedPost = ({post}: IFeedPost) => {
         setIsLiked(prevState => !prevState)
     };
 
+    let content = null;
+
+    if(post.image){
+        content =  <Image source={{uri: post.image}} style={styles.image} />
+    } else if (post.images) {
+        content = <Carousel postImages = {post.images} />
+    }
+
 
 
     return (
@@ -44,9 +53,7 @@ const FeedPost = ({post}: IFeedPost) => {
 
             {/*CONTENT*/}
             <DoubleTap onDoubleTap={isLikedHandler}>
-                <Image source={{uri: post.image}}
-                       style={styles.image}
-                />
+                {content}
             </DoubleTap>
 
 
