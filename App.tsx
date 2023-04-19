@@ -5,7 +5,7 @@ import HomeScreen from "./src/screens/HomeScreen";
 const App = () => {
     return (
         <View style={styles.app}>
-            <HomeScreen />
+            <HomeScreen  />
         </View>
     )
 };
@@ -13,5 +13,5 @@ const App = () => {
 export default App;
 
 const styles = StyleSheet.create({
-    app: {}
+    app: { flex: 1 }
 });
