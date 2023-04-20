@@ -30,12 +30,12 @@ const Comments = ({comment, commentScreen}: ICommentProps) => {
                         <Text style={styles.bold}>{comment.user?.username}{' '}</Text>
                         {comment.comment}
                     </Text>
-
-                    <View style={styles.commentInfoContainer}>
+                    {commentScreen && <View style={styles.commentInfoContainer}>
                         <Text style={styles.commentInfoText}>2d</Text>
                         <Text style={styles.commentInfoText}>Likes 15</Text>
                         <Text style={styles.commentInfoText}>Reply</Text>
-                    </View>
+                    </View> }
+
                 </View>
                 <Pressable onPress={setLikeHandler} hitSlop={8}>
                     <AntDesign
