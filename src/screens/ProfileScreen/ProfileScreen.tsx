@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./styles"
-import {FlatList, Image, Text, View} from "react-native";
+import {Image, Text, View} from "react-native";
 import user from "../../assets/data/user.json"
 import fonts from "../../theme/fonts";
 import Button from "../../components/Button";
@@ -48,7 +48,6 @@ const ProfileScreenHeader = () => {
 }
 
 const ProfileScreen = () => {
-    console.log(user.posts)
     return (
         <FeedImageGreed posts={user.posts} headerComponents={ProfileScreenHeader}/>
     )
