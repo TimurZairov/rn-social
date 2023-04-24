@@ -5,14 +5,19 @@ import {useForm, Controller, Control} from "react-hook-form";
 
 import user from "../../assets/data/user.json"
 import colors from "../../theme/color";
+import {IUser} from "../../types/models";
+
+
+type iEditableUserFields = 'name' | 'username' | 'website' | 'bio'
+type IEditableProfile = Pick<IUser, iEditableUserFields>
 
 
 interface IInputContainer {
     label: string,
     placeHolder: string,
     multiline?: boolean,
-    control: Control,
-    name: string
+    control: Control<IEditableProfile, object>,
+    name: iEditableUserFields
 }
 
 const InputContainer = ({label, placeHolder, multiline = false, control, name}: IInputContainer) => {
@@ -43,9 +48,9 @@ const InputContainer = ({label, placeHolder, multiline = false, control, name}: 
 
 const EditProfileScreen = () => {
 
-    const {control, handleSubmit} = useForm();
+    const {control, handleSubmit} = useForm <IEditableProfile>();
 
-    const onSubmit = (data: {}) => console.log(data);
+    const onSubmit = (data: IEditableProfile) => console.log(data);
 
     const changePhotoHandler = () => {
         console.warn("photo")
