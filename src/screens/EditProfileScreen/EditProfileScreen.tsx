@@ -17,26 +17,32 @@ interface IInputContainer {
     placeHolder: string,
     multiline?: boolean,
     control: Control<IEditableProfile, object>,
-    name: iEditableUserFields
+    name: iEditableUserFields,
+    rules?: object
 }
 
-const InputContainer = ({label, placeHolder, multiline = false, control, name}: IInputContainer) => {
+const InputContainer = ({label, placeHolder, multiline = false, control, name, rules = {}}: IInputContainer) => {
 
     return <Controller
         name={name}
         control={control}
-        render={({field: {onBlur, value, onChange}}) => {
+        rules={rules}
+        render={({field: {onBlur, value, onChange, }, fieldState: {error}}) => {
+            console.log(error)
             return (
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>{label}</Text>
-                    <TextInput placeholder={placeHolder}
-                               style={styles.input}
-                               placeholderTextColor={colors.lightGrey}
-                               multiline={multiline}
-                               onChangeText={onChange}
-                               value={value}
-                               onBlur={onBlur}
-                    />
+                    <View style={{flex:  1}}>
+                        <TextInput placeholder={placeHolder}
+                                   style={[styles.input, {borderBottomColor: error ? colors.orange : colors.darkGray}]}
+                                   placeholderTextColor={colors.lightGrey}
+                                   multiline={multiline}
+                                   onChangeText={onChange}
+                                   value={value}
+                                   onBlur={onBlur}
+                        />
+                        {error && <Text style={{color: colors.orange}}>{error.type}</Text>}
+                    </View>
                 </View>
             )
         }
@@ -48,7 +54,7 @@ const InputContainer = ({label, placeHolder, multiline = false, control, name}: 
 
 const EditProfileScreen = () => {
 
-    const {control, handleSubmit} = useForm <IEditableProfile>();
+    const {control, handleSubmit, formState: {errors}} = useForm<IEditableProfile>();
 
     const onSubmit = (data: IEditableProfile) => console.log(data);
 
@@ -64,10 +70,13 @@ const EditProfileScreen = () => {
                 <Text style={styles.changeText} onPress={changePhotoHandler}>Change Profile photo</Text>
             </View>
 
-            <InputContainer label="Name" placeHolder={"Name"} control={control} name={"name"}/>
-            <InputContainer label="USerName" placeHolder={"USerName"} control={control} name={"username"}/>
-            <InputContainer label="Website" placeHolder={"Website"} control={control} name={"website"}/>
-            <InputContainer label="Bio" placeHolder={"Bio"} multiline control={control} name={"bio"}/>
+            <InputContainer label="Name" placeHolder={"Name"} control={control} name={"name"} rules={{required: true}}/>
+            <InputContainer label="USerName" placeHolder={"USerName"} control={control} name={"username"}
+                            rules={{required: true}}/>
+            <InputContainer label="Website" placeHolder={"Website"} control={control} name={"website"}
+                            rules={{required: true}}/>
+            <InputContainer label="Bio" placeHolder={"Bio"} multiline control={control} name={"bio"}
+                            rules={{required: true}}/>
             <Text style={[styles.changeText, {textAlign: "center"}]} onPress={handleSubmit(onSubmit)}>Submit</Text>
 
         </View>
