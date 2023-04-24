@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import styles from "./style";
 import {Image, Text, TextInput, View} from "react-native";
 import {useForm, Controller, Control} from "react-hook-form";
+import {Asset, launchImageLibrary} from 'react-native-image-picker';
 
 import user from "../../assets/data/user.json"
 import colors from "../../theme/color";
@@ -28,7 +29,6 @@ const InputContainer = ({label, placeHolder, multiline = false, control, name, r
         control={control}
         rules={rules}
         render={({field: {onBlur, value, onChange,}, fieldState: {error}}) => {
-            console.log(error)
             return (
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>{label}</Text>
@@ -54,19 +54,33 @@ const InputContainer = ({label, placeHolder, multiline = false, control, name, r
 
 const EditProfileScreen = () => {
 
-    const {control, handleSubmit, formState: {errors}} = useForm<IEditableProfile>();
+    const [changeAvatar, setChangeAvatar] = useState<null | Asset>(null)
+
+    const {control, handleSubmit, formState: {errors}} = useForm<IEditableProfile>({
+        defaultValues: {
+            name: user.name,
+            username: user.username,
+            website: "",
+            bio: user.bio
+
+        }
+    });
 
     const onSubmit = (data: IEditableProfile) => console.log(data);
 
-    const changePhotoHandler = () => {
-        console.warn("photo")
+    const changePhotoHandler = async () => {
+        await launchImageLibrary({mediaType: "photo"}, ({didCancel, errorCode, errorMessage, assets}) => {
+            if(!didCancel && !errorCode && assets && assets.length){
+                setChangeAvatar(assets[0])
+            }
+        })
     }
 
 
     return (
         <View style={styles.container}>
             <View style={styles.userContainer}>
-                <Image source={{uri: user.image}} style={styles.userImage}/>
+                <Image source={{uri: changeAvatar?.uri || user.image}} style={styles.userImage}/>
                 <Text style={styles.changeText} onPress={changePhotoHandler}>Change Profile photo</Text>
             </View>
 
