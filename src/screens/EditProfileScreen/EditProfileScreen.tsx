@@ -27,12 +27,12 @@ const InputContainer = ({label, placeHolder, multiline = false, control, name, r
         name={name}
         control={control}
         rules={rules}
-        render={({field: {onBlur, value, onChange, }, fieldState: {error}}) => {
+        render={({field: {onBlur, value, onChange,}, fieldState: {error}}) => {
             console.log(error)
             return (
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>{label}</Text>
-                    <View style={{flex:  1}}>
+                    <View style={{flex: 1}}>
                         <TextInput placeholder={placeHolder}
                                    style={[styles.input, {borderBottomColor: error ? colors.orange : colors.darkGray}]}
                                    placeholderTextColor={colors.lightGrey}
@@ -41,7 +41,7 @@ const InputContainer = ({label, placeHolder, multiline = false, control, name, r
                                    value={value}
                                    onBlur={onBlur}
                         />
-                        {error && <Text style={{color: colors.orange}}>{error.type}</Text>}
+                        {error && <Text style={{color: colors.orange}}>{error.message || "Error"}</Text>}
                     </View>
                 </View>
             )
@@ -70,13 +70,35 @@ const EditProfileScreen = () => {
                 <Text style={styles.changeText} onPress={changePhotoHandler}>Change Profile photo</Text>
             </View>
 
-            <InputContainer label="Name" placeHolder={"Name"} control={control} name={"name"} rules={{required: true}}/>
-            <InputContainer label="USerName" placeHolder={"USerName"} control={control} name={"username"}
-                            rules={{required: true}}/>
-            <InputContainer label="Website" placeHolder={"Website"} control={control} name={"website"}
-                            rules={{required: true}}/>
-            <InputContainer label="Bio" placeHolder={"Bio"} multiline control={control} name={"bio"}
-                            rules={{required: true}}/>
+            <InputContainer
+                label="Name"
+                placeHolder={"Name"}
+                control={control}
+                name={"name"}
+                rules={{required: "Name is required", minLength: {value: 3, message: "Name must be more than 3 characters"}}}
+            />
+            <InputContainer
+                label="USerName"
+                placeHolder={"USerName"}
+                control={control}
+                name={"username"}
+                rules={{required: "Username is required"}}
+            />
+            <InputContainer
+                label="Website"
+                placeHolder={"Website"}
+                control={control}
+                name={"website"}
+                rules={{required: "Website is required"}}
+            />
+            <InputContainer
+                label="Bio"
+                placeHolder={"Bio"}
+                multiline
+                control={control}
+                name={"bio"}
+                rules={{required: "Bio is required"}}
+            />
             <Text style={[styles.changeText, {textAlign: "center"}]} onPress={handleSubmit(onSubmit)}>Submit</Text>
 
         </View>
