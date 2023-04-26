@@ -11,7 +11,7 @@ import {IUser} from "../../types/models";
 
 type iEditableUserFields = 'name' | 'username' | 'website' | 'bio'
 type IEditableProfile = Pick<IUser, iEditableUserFields>
-
+/*Screen*/
 
 interface IInputContainer {
     label: string,
