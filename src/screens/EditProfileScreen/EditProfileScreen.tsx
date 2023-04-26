@@ -76,7 +76,7 @@ const EditProfileScreen = () => {
         })
     }
 
-
+    /*Screen*/
     return (
         <View style={styles.container}>
             <View style={styles.userContainer}>
