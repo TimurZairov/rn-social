@@ -70,7 +70,7 @@ const EditProfileScreen = () => {
 
     const changePhotoHandler = async () => {
         await launchImageLibrary({mediaType: "photo"}, ({didCancel, errorCode, errorMessage, assets}) => {
-            if(!didCancel && !errorCode && assets && assets.length){
+            if(!didCancel && !errorCode && assets){
                 setChangeAvatar(assets[0])
             }
         })
