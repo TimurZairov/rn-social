@@ -1,16 +1,27 @@
 import React from "react";
 import styles from "./styles"
 import {Image, Text, View} from "react-native";
+import {useRoute, useNavigation} from "@react-navigation/native"
+
 import user from "../../assets/data/user.json"
 import fonts from "../../theme/fonts";
 import Button from "../../components/Button";
 import FeedImageGreed from "../../components/FeedImageGreed";
 
+
 const ProfileScreenHeader = () => {
+    const router = useRoute()
+    const navigation = useNavigation()
 
     const editHandler = () => {
-        console.warn("Edit clicked")
+        navigation.navigate("Edit")
     }
+
+    const goBackHandler = () => {
+        navigation.goBack()
+    }
+
+    // const {userId} = router.params
 
     return (
         <View style={styles.container}>
@@ -39,7 +50,7 @@ const ProfileScreenHeader = () => {
 
             <View style={styles.buttonContainer}>
                 <Button text={"Edit profile"} onPress={editHandler} />
-                <Button text={"Some button"} />
+                <Button text={"Go back"} onPress={goBackHandler} />
             </View>
 
 

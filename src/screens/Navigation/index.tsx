@@ -1,29 +1,23 @@
 import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
-import {Image, StyleSheet} from "react-native";
+import {RootNavigation} from "../../types/navigationTypes"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import EditProfileScreen from "../EditProfileScreen";
-import HomeScreen from "../HomeScreen";
+import BottomTabNavigator from "./BottomTabNavigator";
+import CommentsScreen from "../CommentsScreen";
 
-const HeaderTitle = () => {
-    return(
-        <Image source={require("../../assets/images/logo.png")} resizeMode="contain" style={{width: 150, height: 40}}/>
-    )
-}
+
 
 
 const Navigation = () => {
 
-    const Stack = createNativeStackNavigator() // {Navigator, Screen}
+    const Stack = createNativeStackNavigator <RootNavigation>() // {Navigator, Screen}
 
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName={"Home"}>
-                <Stack.Screen name="Home" component={HomeScreen} options={{
-                    headerTitle: HeaderTitle, headerTitleAlign: "center"
-                }}/>
-                <Stack.Screen name="Edit" component={EditProfileScreen}/>
+                <Stack.Screen name="Home" component={BottomTabNavigator} options={{headerShown: false}}/>
+                <Stack.Screen name="Comments" component={CommentsScreen}/>
             </Stack.Navigator>
 
         </NavigationContainer>
@@ -31,8 +25,3 @@ const Navigation = () => {
 }
 
 export default Navigation
-
-const styles = StyleSheet.create({
-    app: { flex: 1 }
-});
-

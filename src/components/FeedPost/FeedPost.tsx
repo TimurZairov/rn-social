@@ -5,6 +5,7 @@ import Entypo from "react-native-vector-icons/Entypo"
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from "@react-navigation/native"
 
 import styles from "./styles";
 import {IPost} from "../../types/models";
@@ -19,6 +20,8 @@ interface IFeedPost {
 }
 
 const FeedPost = ({post, isVisible}: IFeedPost) => {
+
+    const navigation = useNavigation()
 
     const [isDescriptionIsExpanded, setIsDescriptionIsExpanded] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
@@ -43,6 +46,14 @@ const FeedPost = ({post, isVisible}: IFeedPost) => {
         content = <VideoPlayer uri={post.video} paused={!isVisible} />
     }
 
+    const navigateToUserProfile = () => {
+        navigation.navigate("UserProfile", {userId: post.user.id})
+    }
+
+    const goToComments = () => {
+        navigation.navigate("Comments")
+    }
+
 
     return (
             <View style={styles.container}>
@@ -51,7 +62,7 @@ const FeedPost = ({post, isVisible}: IFeedPost) => {
                     <Image
                         style={styles.imageAvatar}
                         source={{uri: post.user.image}}/>
-                    <Text style={styles.userName}>{post.user.username}</Text>
+                    <Text onPress={navigateToUserProfile} style={styles.userName}>{post.user.username}</Text>
                     <Entypo name="dots-three-horizontal" size={25} color={colors.orange} style={styles.dots}/>
                 </View>
 
@@ -107,7 +118,7 @@ const FeedPost = ({post, isVisible}: IFeedPost) => {
                           onPress={expandCommentHandler}>{isDescriptionIsExpanded ? "less" : "more"} </Text>
 
                     {/*COMMENTS*/}
-                    <Text style={styles.allComments}>View all {post.nofComments} comments</Text>
+                    <Text onPress={goToComments} style={styles.allComments}>View all {post.nofComments} comments</Text>
                     {post.comments.map(comment => (
                         <Comments key={comment.id} comment={comment}/>
                     ))}
