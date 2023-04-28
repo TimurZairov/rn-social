@@ -6,6 +6,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from "@react-navigation/native"
+import {FeedNavigationProp} from "../../types/navigationTypes"
 
 import styles from "./styles";
 import {IPost} from "../../types/models";
@@ -21,7 +22,7 @@ interface IFeedPost {
 
 const FeedPost = ({post, isVisible}: IFeedPost) => {
 
-    const navigation = useNavigation()
+    const navigation = useNavigation<FeedNavigationProp>()
 
     const [isDescriptionIsExpanded, setIsDescriptionIsExpanded] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
@@ -51,7 +52,7 @@ const FeedPost = ({post, isVisible}: IFeedPost) => {
     }
 
     const goToComments = () => {
-        navigation.navigate("Comments")
+        navigation.navigate("Comments", {userId: post.user.id})
     }
 
 

@@ -2,7 +2,6 @@ import React, {useRef, useState} from "react";
 import {FlatList, ViewToken} from "react-native";
 import posts from "../../assets/data/posts.json";
 import FeedPost from "../../components/FeedPost";
-import {sizes} from "../../theme/sizes";
 
 const HomeScreen = () => {
     const [activePost, setActivePost] = useState<string | null>(null)
