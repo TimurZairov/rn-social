@@ -24,6 +24,11 @@ export type StackProfile = {
     Profile: undefined,
     Edit: undefined
 }
+export type SearchScreenParams = {
+    Users: undefined,
+    Posts: undefined,
+}
+
 //PROPS
 export type FeedNavigationProp = NativeStackNavigationProp<NativeStack, "HomeTab" >
 

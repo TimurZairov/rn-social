@@ -8,10 +8,10 @@ import FontAwesome from "react-native-vector-icons/FontAwesome"
 import {BottomNavigator} from "../../types/navigationTypes";
 
 import NotificationScreen from "../NotificationScreen";
-import SearchScreen from "../SearchScreen";
 import UploadScreen from "../UploadScreen";
 import CreateNativeStackNavigator from "./CreateNativeStackNavigator";
 import StackProfileScreens from "./StackProfileScrenns";
+import SearchTabNavigator from "./SearchTabNavigation";
 
 const Tab = createBottomTabNavigator <BottomNavigator>()
 
@@ -32,7 +32,7 @@ const BottomTabNavigator = () => {
             }}/>
             <Tab.Screen
                 name="Search"
-                component={SearchScreen}
+                component={SearchTabNavigator}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({color, size}) => (<MaterialIcons name="search" size={size} color={color}/>)

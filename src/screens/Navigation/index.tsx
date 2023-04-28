@@ -19,7 +19,6 @@ const Navigation = () => {
                 <Stack.Screen name="Home" component={BottomTabNavigator} options={{headerShown: false}}/>
                 <Stack.Screen name="Comments" component={CommentsScreen}/>
             </Stack.Navigator>
-
         </NavigationContainer>
     )
 }
